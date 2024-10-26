@@ -10,4 +10,4 @@ python manage.py migrate --noinput
 python manage.py collectstatic --noinput
 
 # Start the Django app with Gunicorn, binding to Render's $PORT
-gunicorn djangoproject1.wsgi:application --bind 0.0.0.0:$PORT
+gunicorn mysite.wsgi:application --bind 0.0.0.0:$PORT
