@@ -1,6 +1,47 @@
-#DS Store
+# Ignore macOS system files
 .DS_Store
 
+# Ignore virtual environments
+myenv/
+*.env
 
+# Ignore Python cache and bytecode files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Ignore compiled C extensions
+*.so
+
+# Ignore log files and temporary files
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Ignore configuration files for text editors or IDEs
+.vscode/
+.idea/
+
+# Ignore dependency directories
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Ignore Git submodules backup file
 .gitmodules.save
+
+# Ignore frontend build files if applicable (add your specific build folder if different)
+frontend/build/
+frontend/dist/
+
+# Ignore sensitive data
+*.key
+*.pem
+*.p12
+*.crt
+
+# Ignore application-specific files
 prompts.txt
