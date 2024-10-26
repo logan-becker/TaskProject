@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://http://taskproject-tthz.onrender.com/tasks/api/tasks/';
+const API_URL = 'https://taskproject-tthz.onrender.com/tasks/api/tasks/';
 
 export const getTasks = () => axios.get(API_URL);
 
