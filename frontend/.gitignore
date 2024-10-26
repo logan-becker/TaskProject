@@ -54,6 +54,8 @@ db.sqlite3
 venv/
 ENV/
 env/
+myenv/
+
 # Include this to avoid adding your virtualenv in case of using pipenv or poetry
 Pipfile.lock
 poetry.lock

@@ -32,4 +32,4 @@ python manage.py collectstatic --noinput
 
 # Step 7: Start the Django server with Gunicorn
 echo "Starting the Django server with Gunicorn..."
-gunicorn mysite.wsgi:application --bind 0.0.0.0:8000
+gunicorn mysite.wsgi:application --bind 0.0.0.0:$PORT
