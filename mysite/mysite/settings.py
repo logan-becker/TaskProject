@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-^esxvoiek)p^^v*^_a7krs@wwlx^!hs**ja1e1f6j*tr-t7ez^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'djangoreacttodoapptest.onrender.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'djangoreacttodoapptest.onrender.com', 'https://taskproject-tthz.onrender.com/', 'https://taskprojectfrontend.onrender.com/']
 
 
 # Application definition
