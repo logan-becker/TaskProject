@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Details - {{ task1.title }}</title>
+</head>
+<body>
+
+    <h1>Task: {{ task1.title }}</h1>
+    <p>{{ task1.description }}</p>
+
+    <h2>Subtasks</h2>
+    {% if latest_subtask_list %}
+        <ul>
+            {% for subtask in latest_subtask_list %}
+                <li>
+                    <strong>{{ subtask.title }}</strong>
+                    {% if subtask.is_completed %}
+                        (Completed)
+                    {% else %}
+                        (Not Completed)
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No subtasks available for this task.</p>
+    {% endif %}
+
+</body>
+</html>

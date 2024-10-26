@@ -1,0 +1,178 @@
+A. Set up and wiring a path
+    1. pip install django
+    2. cd into project dir
+        - run the "django-admin startproject 'project name'" command
+    3. to start dev server run "python manage.py runserver" command
+    4. to create app, "manage.py startapp 'app name'" command
+
+B. Determine the database type and configure accordingly
+    1. create models for the database   
+    2. Tell Django that our app needs to be included in the project and add a reference to its configuration class in the settings 
+        - run the "python manage.py makemigrations polls" command in the terminal
+        - makemigrations command tells django that we've made changes to models 
+        -Migrations are how django stores changes to models/databse schema
+    3. run "python sqlmigrate polls 0001" command in order to tell django to manage the db automatically
+        -migrate command runs migration auto 
+    4. run "python manage.py migrate" again to create those model tables in the db
+        - 3 step process for making model changes in as follows
+            1. Change your models (in models.py).
+            2. Run python manage.py makemigrations to create migrations for those changes
+            3. Run python manage.py migrate to apply those changes to the database.
+C. Playing with the API
+    1. There's a whole lot of stuff to learn that cant really be summarized here that is very helpful when manipulating the data use din the app
+D. Introducing the admin
+    1. create an admin user by running the command "python manage.py createsuperuser"
+        - give a uname, email, and pw "12345"
+    2. login, make poll app editable by the admin
+        - admin.py add code to import admin and register a question object
+
+to do list:
+make a todo app. add it to list.
+
+
+in no order
+1. modify admin.py to get todo views and add items
+2. modify urls.py to route to our todo task list
+3. create views for tasks and subtasks
+4. write tests to verify this function works
+
+
+TODO:
+rewrite the task so i can use it considering gpt did it a different way
+maybe even create a new "app" for it so it could be reuesed in the future
+
+add tasks for:
+lot wizard
+a chess website for fun
+ecommerce site that is open source??? would be amazing for a resume
+
+models
+>
+views render templates
+>
+urls > take templates
+>
+templates >
+
+ - urls tells templates what data to use from views
+
+
+
+
+
+Models.py
+
+class React(models.Model):
+    name = models.CharField(max_length=30)
+    detail = models.CharField(max_length=500)
+
+
+    
+
+
+
+
+models.py:
+# Create your models here.
+class Task1(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True, null=True)
+    pub_date = models.DateTimeField("date published")
+    is_completed = models.BooleanField(default=False)
+
+    
+    def __str__(self):
+        return self.title
+    
+class SubTask1(models.Model):
+    task = models.ForeignKey(Task1, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True, null=True)
+    is_completed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.task.title} - {self.title}"
+    
+views.py:
+class Task1ListView(generics.ListAPIView):
+    queryset = Task1.objects.all()
+    serializer_class = Task1Serializer
+    
+class Task1DetailView(generics.RetrieveAPIView):
+    queryset = Task1.objects.all()
+    serializer_class = Task1Serializer
+
+urls.py:
+    path("api/tasks", Task1ListView.as_view(), name="task1-list"),
+    path("api/tasks/<int:pk>/", Task1DetailView.as_view(), name="task1-detail"),
+
+app.js:
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './App.css';
+
+const App = () => {
+  //state declaration using useState
+  const [tasks, setTasks] = useState([]);
+
+  //useEffect replaces componentDidMount to fetch data on mount
+  useEffect(() => {
+    fetchData();
+  }, []); //empty dependency array ensures this only runs once, like componentDidMount
+
+  //fetch data from the Django API
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/tasks/api/tasks/');
+      setTasks(response.data); // Update tasks with API response
+      console.log('Fetched tasks:', response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  return (
+    <div>
+      <h1>Tasks and Subtasks</h1>
+      <ul>
+        {tasks && tasks.length > 0 ? (
+          tasks.map(task => (
+            <li key={task.id}>
+              <h2>{task.title}</h2>
+              <p>{task.description}</p>
+              <h3>Subtasks:</h3>
+              <ul>
+                {/* Use "subtasks" (the related_name from Django) to display subtasks */}
+                {task.subtasks && task.subtasks.length > 0 ? (
+                  task.subtasks.map(subtask => (
+                    <li key={subtask.id}>
+                      <strong>{subtask.title}</strong> - {subtask.is_completed ? "Completed" : "Incomplete"}
+                    </li>
+                  ))
+                ) : (
+                  <li>No subtasks available</li> // Handle no subtasks
+                )}
+              </ul>
+            </li>
+          ))
+        ) : (
+          <p>No tasks available</p>  // Handle no tasks available
+        )}
+      </ul>
+    </div>
+  );
+};
+
+export default App;
+
+    
+    
+
+   
+   
+   
+   
+const handleDelete = async (taskId) => {
+    await deleteTask(taskId);
+    setTasks();
+  };
