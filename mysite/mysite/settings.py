@@ -18,11 +18,7 @@ from pathlib import Path
 # site_packages = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'myenv/lib/python3.9/site-packages')
 # sys.path.append(site_packages)
 
-from dotenv import load_dotenv # type: ignore
-
-load_dotenv()
-
-ENVIRONMENT = os.getenv("DJANGO_ENV")
+ENVIRONMENT = os.getenv("DJANGO_ENV", "production")
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
