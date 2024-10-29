@@ -18,7 +18,7 @@ from pathlib import Path
 # site_packages = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'myenv/lib/python3.9/site-packages')
 # sys.path.append(site_packages)
 
-ENVIRONMENT = os.getenv("DJANGO_ENV", "production")
+ENVIRONMENT = os.getenv("DJANGO_ENV")
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
@@ -41,7 +41,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = ['localhost', 'taskproject-tthz.onrender.com', 'taskprojectfrontend.onrender.com']
 

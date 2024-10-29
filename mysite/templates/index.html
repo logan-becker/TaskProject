@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tasks Index</title>
+</head>
+<body>
+    <h1>Task List</h1>
+    {% for task in latest_task_list %}
+        <p>{{ task.title }} - {{ task.pub_date }}</p>
+    {% endfor %}
+</body>
+</html>

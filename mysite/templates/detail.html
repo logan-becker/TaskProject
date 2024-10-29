@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Detail</title>
+</head>
+<body>
+    <h1>{{ task1.title }}</h1>
+    <p>{{ task1.description }}</p>
+    <h2>Subtasks</h2>
+    {% for subtask in latest_subtask_list %}
+        <p>{{ subtask.name }} - {{ subtask.due_date }}</p>
+    {% endfor %}
+</body>
+</html>
