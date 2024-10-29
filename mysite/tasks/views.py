@@ -1,10 +1,12 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views import generic
 from django.utils import timezone
-from requests import Response
 from . models import Task1, SubTask1
-from rest_framework import generics
-from . serializer import Task1Serializer
+from rest_framework import generics, status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+from . serializer import SubTask1Serializer, Task1Serializer
 
 
 
@@ -51,6 +53,27 @@ class DetailView(generic.DetailView):
         
         return context
     
+@api_view(['POST'])
+def add_subtask(request, pk):
+    # Fetch the task, or return a 404 if not found
+    task = get_object_or_404(Task1, pk=pk)
+    
+    # Log the incoming data for debugging
+    print("Incoming subtask data:", request.data)
+    
+    # Use SubTask1Serializer to validate and save incoming data
+    serializer = SubTask1Serializer(data=request.data)
+    if serializer.is_valid():
+        try:
+            # Save the subtask and associate it with the correct task
+            serializer.save(task=task)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            print("Error during save:", e)
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    else:
+        print("Validation errors:", serializer.errors)  # Log validation errors if any
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Create the api views here in order to have react render them from this view
 

@@ -14,7 +14,7 @@ urlpatterns = [
     # api endpoints here
     path("api/tasks/", Task1ListView.as_view(), name="task1-list"),
     path("api/tasks/<int:pk>/", Task1DetailView.as_view(), name="task1-detail"),
-    
+    path("api/tasks/<int:pk>/add_subtask/", views.add_subtask, name="add-subtask"),
     
 ] 
 
