@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const API_URL = 'https://taskproject-tthz.onrender.com/tasks/api/tasks/';
-const API_URL = 'http://localhost:8000/tasks/api/tasks/';
+
+const API_URL = os.getenv('API_URL')
 
 
 export const getTasks = () => axios.get(API_URL);
