@@ -150,11 +150,11 @@ const TaskList = () => {
                     {task.subtasks && task.subtasks.length > 0 && (
                         <div >
                             <h3 style={styles.subtaskHeader}>Subtasks:</h3>
-                            <ul style={styles.ul}>
+                            <li style={styles.ul}>
                                 {task.subtasks.map((subtask) => (
                                     <ul key={subtask.id} style={styles.subtaskItem(subtask.is_completed)}>{subtask.title}</ul>
                                 ))}
-                            </ul>
+                            </li>
                         </div>
                     )}
                     {/* Subtask Form */}

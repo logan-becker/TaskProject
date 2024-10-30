@@ -1,15 +1,12 @@
 import axios from 'axios';
 
+const apiUrl = process.env.REACT_APP_API_URL
 
+export const getTasks = () => axios.get(apiUrl);
 
-const API_URL = process.env.API_URL
+export const createTask = (taskData) => axios.post(apiUrl, taskData);
 
-
-export const getTasks = () => axios.get(API_URL);
-
-export const createTask = (taskData) => axios.post(API_URL, taskData);
-
-export const deleteTask = (taskId) => axios.delete(`${API_URL}${taskId}/`);
+export const deleteTask = (taskId) => axios.delete(`${apiUrl}${taskId}/`);
 
 export const createSubtask = (taskId, subtaskData) =>
-  axios.post(`${API_URL}${taskId}/add_subtask/`, subtaskData);
+  axios.post(`${apiUrl}${taskId}/add_subtask/`, subtaskData);
