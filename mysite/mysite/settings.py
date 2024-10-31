@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "home.apps.HomeConfig",
     "polls.apps.PollsConfig",
     "tasks.apps.TasksConfig",
+    "accounts.apps.AccountsConfig",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -60,6 +61,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders'
 ]
 
@@ -127,6 +129,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# django defined user model
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+
 
 
 
@@ -161,7 +167,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
-    ]
+    ],
+        'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+
 }
 
 # Allow CORS from any origin
