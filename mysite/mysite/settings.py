@@ -27,7 +27,7 @@ if ENVIRONMENT == "development":
     CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
 else:
     ALLOWED_HOSTS = ['taskproject-tthz.onrender.com', 'taskprojectfrontend.onrender.com']
-    CORS_ALLOWED_ORIGINS = ['https://taskprojectfrontend.onrender.com']
+    CORS_ALLOWED_ORIGINS = ['https://taskprojectfrontend.onrender.com', 'taskproject-tthz.onrender.com']
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -173,5 +173,24 @@ REST_FRAMEWORK = {
     ),
 
 }
+
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+
+CORS_ALLOW_HEADERS = [
+    "authorization",
+    "content-type",
+    "accept",
+    "origin",
+    "x-csrftoken",
+    "x-requested-with",
+]
+
 
 
