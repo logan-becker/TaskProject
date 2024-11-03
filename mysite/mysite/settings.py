@@ -174,6 +174,4 @@ REST_FRAMEWORK = {
 
 }
 
-# Allow CORS from any origin
-CORS_ALLOWED_ORIGINS = ['https://taskprojectfrontend.onrender.com', 'http://localhost:3000',]
 

@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const apiUrl = (process.env.REACT_APP_API_URL || 'https://taskproject-tthz.onrender.com/tasks/api/tasks/')
+const apiUrl = (process.env.REACT_APP_API_URL)
+
+// || 'https://taskproject-tthz.onrender.com/tasks/api/tasks/'
 
 export const getTasks = () => axios.get(apiUrl);
 
