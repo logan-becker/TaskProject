@@ -66,7 +66,7 @@ const TaskList = () => {
             backgroundColor: '#3b82f6'
           }
         },
-        'ul': {
+        ul: {
             listStyle: 'none',
             padding: 0,
             margin: 0
