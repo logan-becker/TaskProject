@@ -1,8 +1,11 @@
 import './App.css';
 import TaskList from './components/TaskList';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Login from './components/AuthComponents/Login'
 
 
-console.log("API URL: " + process.env.REACT_APP_API_URL)
+
+// user auth will be passed here I believe
 
 function App() {
   return (

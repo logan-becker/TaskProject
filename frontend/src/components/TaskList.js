@@ -3,6 +3,8 @@ import { getTasks, deleteTask } from '../services/TaskServices';
 import TaskForm from './TaskForm';
 import SubtaskForm from './SubTaskForm';
 
+// auth passed here to be able to render conditionally
+
 const TaskList = () => {
     const [tasks, setTasks] = useState([]);
 
