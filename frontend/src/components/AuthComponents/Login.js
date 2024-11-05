@@ -6,9 +6,29 @@ import { Form, Button } from 'react-bootstrap'
 const Login = () => {
 
     // use state
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
 
     //functions for auth
+    const loginAccount = async (e) => {
+        const loginData = {
+            email: email,
+            password: password
+        };
 
+        try {
+            const response = axios.post('http://localhost:8000/accounts/login/', loginData);
+            if (response.status === 200) {
+                localStorage.setItem('accessToken', response.data.access);
+                localStorage.setItem('refreshToken', (await response).data.refresh);
+                localStorage.setItem('email', (await response).data.email);
+            }
+            alert('Login successful!')
+        } catch (error) {
+            console.error('There was an error logging in!', error);
+            alert('Invalid credentials. Please try again.');
+        }
+    }
     //styles
     const styles = {
 
@@ -48,17 +68,18 @@ const Login = () => {
 
     return (
         <div className='formContainer' style={styles.formContainer}>
-            <Form>
+            <Form onSubmit={loginAccount}>
                 <Form.Group className='mb-3' controlId='exampleForm.ControlInput1'>
-                    <Form.Label style={styles.label}>Username</Form.Label>
-                    <Form.Control type='email' placeholder='Enter username' size='sm'/>
+                    <Form.Label style={styles.label}>Email</Form.Label>
+                    <Form.Control type='email' placeholder='Enter email' size='sm' onChange={(e) => setEmail(e.target.value)}/>
                     <Form.Text className='text-muted'>
                         We'll never share your email with anyone else!
                     </Form.Text>
                 </Form.Group>
                 <Form.Group className='mb-3' controlId='formBasicPassword'>
                     <Form.Label style={styles.label}>Password</Form.Label>
-                    <Form.Control type='password' placeholder='password' size='sm' />
+                    <Form.Control type='password' placeholder='password' size='sm' onChange={(e) => setPassword(e.target.value)}
+                    />
                 </Form.Group>
                 <Button size='sm' variant="primary" type="submit" style={styles.button}>Submit</Button>
             </Form>

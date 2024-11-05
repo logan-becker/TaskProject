@@ -1,7 +1,9 @@
 import './App.css';
 import TaskList from './components/TaskList';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Login from './components/AuthComponents/Login'
+import Login from './components/AuthComponents/Login';
+import Register from './components/AuthComponents/Register'
+
 
 
 

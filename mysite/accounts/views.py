@@ -17,6 +17,7 @@ class RegisterView(APIView):
         if serializer.is_valid():
             user = serializer.save()
             return Response({'message': 'User registered successfully'}, status=status.HTTP_201_CREATED)
+        print("Registration errors:", serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Login API View
@@ -34,5 +35,3 @@ class LoginView(APIView):
             })
         return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
-
-# CustomAuthToken as view here
