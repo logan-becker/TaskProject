@@ -24,6 +24,9 @@ const Register = () => {
             const response = await axios.post('http://localhost:8000/accounts/register/', userData);
             if (response.status === 201) {
                 alert('User successfully registered');
+                setEmail('');
+                setUsername('');
+                setPassword('');
             }
         } catch (error) {
             console.error('There was an error registering the user!', error);

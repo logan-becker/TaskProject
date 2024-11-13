@@ -11,6 +11,8 @@ const Login = () => {
 
     //functions for auth
     const loginAccount = async (e) => {
+        e.preventDefault();
+
         const loginData = {
             email: email,
             password: password
@@ -22,8 +24,8 @@ const Login = () => {
                 localStorage.setItem('accessToken', response.data.access);
                 localStorage.setItem('refreshToken', (await response).data.refresh);
                 localStorage.setItem('email', (await response).data.email);
+                alert('Login successful!')
             }
-            alert('Login successful!')
         } catch (error) {
             console.error('There was an error logging in!', error);
             alert('Invalid credentials. Please try again.');
@@ -81,7 +83,7 @@ const Login = () => {
                     <Form.Control type='password' placeholder='password' size='sm' onChange={(e) => setPassword(e.target.value)}
                     />
                 </Form.Group>
-                <Button size='sm' variant="primary" type="submit" style={styles.button}>Submit</Button>
+                <Button size='sm' variant="primary" type="submit" style={styles.button}>Login</Button>
             </Form>
         </div>
     )

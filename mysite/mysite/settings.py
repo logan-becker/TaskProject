@@ -174,6 +174,8 @@ REST_FRAMEWORK = {
 
 }
 
+
+
 CORS_ALLOW_METHODS = [
     "DELETE",
     "GET",
@@ -191,6 +193,9 @@ CORS_ALLOW_HEADERS = [
     "x-csrftoken",
     "x-requested-with",
 ]
+
+CORS_ALLOW_CREDENTIALS = True
+
 
 
 
