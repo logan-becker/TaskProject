@@ -12,8 +12,8 @@ import Register from './components/AuthComponents/Register'
 function App() {
   return (
     <div className="App">
-      <Login />
-      <Register />
+      {/* <Login />
+      <Register /> */}
       <TaskList />
     </div>
   );
