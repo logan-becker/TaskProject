@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Form, Button } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux';
+import { loginFailure, loginSuccess } from '../../slices/authSlice';
+
 
 
 const Login = () => {
 
     // use state
+    const dispatch = useDispatch();
+    const { isAuthenticated } = useSelector((state) => state.auth);
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
 
@@ -20,17 +25,29 @@ const Login = () => {
 
         try {
             const response = axios.post('http://localhost:8000/accounts/login/', loginData);
+
             if (response.status === 200) {
-                localStorage.setItem('accessToken', response.data.access);
-                localStorage.setItem('refreshToken', (await response).data.refresh);
-                localStorage.setItem('email', (await response).data.email);
-                alert('Login successful!')
+                const {access: token, email } = (await response).data;
+
+                //dispatch login success to update state 
+                dispatch(loginSuccess({ user: {email}, token}));
+
+                //store tokens locally for persistence
+                localStorage.setItem('accessToken', token);
+                localStorage.setItem('email', email)
+
+                setEmail('');
+                setPassword('');
             }
+            
         } catch (error) {
-            console.error('There was an error logging in!', error);
-            alert('Invalid credentials. Please try again.');
+            //dispatch login failure action with error message to update redux state
+            dispatch(loginFailure({error: error.message}));
         }
     }
+
+    console.log('Is Authenticated:', isAuthenticated); // Should be true if login succeeded
+
     //styles
     const styles = {
 
