@@ -13,7 +13,7 @@ const Profile = () => {
 
   return (
     <div>
-      <h2>Welcome, {user.name}</h2>
+      <h2>Welcome</h2>
       <button onClick={() => dispatch(logout())}>Logout</button>
     </div>
   );
