@@ -3,169 +3,154 @@ import { getTasks, deleteTask } from '../services/TaskServices';
 import TaskForm from './TaskForm';
 import SubtaskForm from './SubTaskForm';
 
-// auth passed here to be able to render conditionally
-
 const TaskList = () => {
-    const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState([]);
 
-    const fetchTasks = () => {
-        getTasks()
-            .then((response) => setTasks(response.data))
-            .catch((error) => console.error("Error fetching tasks: ", error))
-    }
+  const fetchTasks = () => {
+    getTasks()
+      .then((response) => setTasks(response.data))
+      .catch((error) => console.error("Error fetching tasks: ", error));
+  };
 
-    useEffect(() => {
-        fetchTasks();
-    }, []);
-    
-    const handleDelete = (taskId) => {
-        deleteTask(taskId)
-        .then(() => setTasks(tasks.filter((task) => task.id !== taskId)))
-        .catch((error) => console.log("Error deleting task: ", error));
-    };
-    
-    const handleTaskAdded = () => {
-        fetchTasks();
-    };
+  useEffect(() => {
+    fetchTasks();
+  }, []);
 
-    const styles = {
-        container: {
-          padding: '24px',
-          marginBottom: '24px',
-          borderRadius: '8px',
-          boxShadow: '4px 0 6px -6px rgba(0,0,0,0.3), -4px 0 6px -6px rgba(0,0,0,0.3), 0 -4px 6px -6px rgba(0,0,0,0.3)',
-          border: '1px solid #e5e7eb',
-          borderBottom: 'none',
-        },
-        title: {
-          fontSize: '1.25rem',
-          fontWeight: '600',
-          marginBottom: '16px'
-        },
-        form: {
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '16px'
-        },
-        input: {
-          width: '100%',
-          padding: '8px',
-          border: '1px solid black',
-          borderRadius: '6px',
-          outline: 'none',
-        },
-        button: {
-          backgroundColor: '#60a5fa',
-          color: 'white',
-          padding: '8px 16px',
-          borderRadius: '6px',
-          border: 'none',
-          cursor: 'pointer',
-          transition: 'background-color 0.2s',
-          ':hover': {
-            backgroundColor: '#3b82f6'
-          }
-        },
-        ul: {
-            listStyle: 'none',
-            padding: 0,
-            margin: 0
-          },
-        deleteButton: {
-          marginTop: '16px',
-          padding: '4px 12px',
-          fontSize: '0.875rem',
-          color: '#dc2626',
-          border: '1px solid #fecaca',
-          borderRadius: '6px',
-          backgroundColor: 'transparent',
-          cursor: 'pointer',
-          transition: 'background-color 0.2s',
-          ':hover': {
-            backgroundColor: '#fee2e2'
-          }
-        },
-        checkbox: {
-          marginRight: '8px'
-        },
-        taskCard: {
-          padding: '24px',
-          marginBottom: '24px',
-          background: 'linear-gradient(to bottom, #ffffff, #f0f0f5)',
-          borderRadius: '8px',
-          border: '1px solid #e5e7eb',
-          boxShadow: '0 1px 2px rgba(0, 0, 0, 0.05)',
-          listStyle: 'none',
+  const handleDelete = (taskId) => {
+    deleteTask(taskId)
+      .then(() => setTasks(tasks.filter((task) => task.id !== taskId)))
+      .catch((error) => console.log("Error deleting task: ", error));
+  };
 
-        },
-        taskTitle: {
-          fontSize: '1.125rem',
-          fontWeight: '600',
-          marginBottom: '8px'
-        },
-        taskDescription: {
-          color: '#4b5563',
-          marginBottom: '8px'
-        },
-        taskDate: {
-          fontSize: '0.875rem',
-          color: '#6b7280',
-          marginBottom: '8px'
-        },
-        statusBadge: (isCompleted) => ({
-          display: 'inline-block',
-          padding: '4px 8px',
-          marginLeft: '8px',
-          borderRadius: '4px',
-          fontSize: '0.875rem',
-          backgroundColor: isCompleted ? '#dcfce7' : '#fee2e2',
-          color: isCompleted ? '#166534' : '#991b1b'
-        }),
-        subtasksList: {
-          marginTop: '16px'
-        },
-        subtaskHeader: {
-          fontWeight: '500',
-          marginBottom: '8px'
-        },
-        subtaskItem: (isCompleted) => ({
-          padding: '12px',
-          marginBottom: '8px',
-          borderRadius: '6px',
-          backgroundColor: isCompleted ? '#f0fdf4' : '#fef2f2',
-          border: `1px solid ${isCompleted ? '#bbf7d0' : '#fecaca'}`
-        })
-      };
-      
-    return (
-        <div style={styles.container}>
-        <TaskForm onTaskAdded={handleTaskAdded} />
-        <ul style={styles.ul}>
-            {tasks.map((task) => (
-                <ul key={task.id} style={styles.taskCard}>
-                    <h2 style={styles.taskTitle}>{task.title}</h2>
-                    <p style={styles.taskDescription}>{task.description}</p>
-                    <p style={styles.taskDate}>Published on: {task.pub_date}</p>
-                    <p style={styles.checkbox}>Completed: {task.is_completed ? 'Yes' : 'No'}</p>
-                    <button style={styles.deleteButton}onClick={() => handleDelete(task.id)}>Delete</button>
-                    {/* Display Subtasks */}
-                    {task.subtasks && task.subtasks.length > 0 && (
-                        <div >
-                            <h3 style={styles.subtaskHeader}>Subtasks:</h3>
-                            <li style={styles.ul}>
-                                {task.subtasks.map((subtask) => (
-                                    <ul key={subtask.id} style={styles.subtaskItem(subtask.is_completed)}>{subtask.title}</ul>
-                                ))}
-                            </li>
-                        </div>
-                    )}
-                    {/* Subtask Form */}
-                    <SubtaskForm taskId={task.id} onSubtaskAdded={fetchTasks} />
+  const handleTaskAdded = () => {
+    fetchTasks();
+  };
+
+  const styles = {
+    container: {
+      maxWidth: '800px',
+      margin: '0 auto',
+      padding: '24px',
+    },
+    taskCard: {
+      maxWidth: '600px',
+      margin: '16px auto',
+      padding: '20px',
+      background: '#ffffff',
+      borderRadius: '10px',
+      boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.05)',
+      border: '1px solid #e5e7eb',
+      transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+      ':hover': {
+        transform: 'translateY(-5px)',
+        boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)',
+      },
+        
+    },
+    taskTitle: {
+      fontSize: '1.5rem',
+      fontWeight: '600',
+      marginBottom: '8px',
+      color: '#111827',
+    },
+    taskDescription: {
+      color: '#4b5563',
+      marginBottom: '8px',
+      fontSize: '1rem',
+    },
+    taskDate: {
+      fontSize: '0.875rem',
+      color: '#6b7280',
+      marginBottom: '8px',
+    },
+    checkbox: {
+      fontSize: '1rem',
+      color: '#374151',
+      marginBottom: '16px',
+    },
+    deleteButton: {
+      padding: '8px 16px',
+      fontSize: '0.875rem',
+      color: '#dc2626',
+      border: '1px solid #fecaca',
+      borderRadius: '6px',
+      backgroundColor: 'transparent',
+      cursor: 'pointer',
+      transition: 'background-color 0.2s',
+      width: '35%', // Set width to 35%
+      margin: '16px auto 0', // Center the button horizontally
+      display: 'block', // Ensures it behaves as a block-level element
+    },
+        deleteButtonHover: {
+      backgroundColor: '#fee2e2',
+    },
+    subtaskHeader: {
+      fontSize: '1.25rem',
+      fontWeight: '500',
+      marginBottom: '12px',
+    },
+    subtaskList: {
+      padding: '0',
+      margin: '0',
+      listStyle: 'none',
+    },
+    subtaskItem: (isCompleted) => ({
+      padding: '12px',
+      marginBottom: '8px',
+      borderRadius: '6px',
+      backgroundColor: isCompleted ? '#f0fdf4' : '#fef2f2',
+      border: `1px solid ${isCompleted ? '#bbf7d0' : '#fecaca'}`,
+      fontSize: '0.875rem',
+    }),
+  };
+
+  return (
+    <div style={styles.container}>
+      <TaskForm onTaskAdded={handleTaskAdded} />
+      <ul style={{ listStyle: 'none', padding: 0 }}>
+        {tasks.map((task) => (
+          <li key={task.id} style={styles.taskCard}>
+            <h2 style={styles.taskTitle}>{task.title}</h2>
+            <p style={styles.taskDescription}>{task.description}</p>
+            <p style={styles.taskDate}>Published on: {task.pub_date}</p>
+            <p style={styles.checkbox}>
+              Completed? - {task.is_completed ? 'Yes' : 'No'}
+            </p>
+            {/* Display Subtasks */}
+            {task.subtasks && task.subtasks.length > 0 && (
+              <div>
+                <h3 style={styles.subtaskHeader}>Subtasks:</h3>
+                <ul style={styles.subtaskList}>
+                  {task.subtasks.map((subtask) => (
+                    <li
+                      key={subtask.id}
+                      style={styles.subtaskItem(subtask.is_completed)}
+                    >
+                      {subtask.title}
+                    </li>
+                  ))}
                 </ul>
-            ))}
-        </ul>
+              </div>
+            )}
+            {/* Subtask Form */}
+            <SubtaskForm taskId={task.id} onSubtaskAdded={fetchTasks} />
+            <button
+              style={styles.deleteButton}
+              onMouseEnter={(e) =>
+                (e.target.style.backgroundColor = styles.deleteButtonHover.backgroundColor)
+              }
+              onMouseLeave={(e) =>
+                (e.target.style.backgroundColor = 'transparent')
+              }
+              onClick={() => handleDelete(task.id)}
+            >
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
-);
+  );
 };
 
 export default TaskList;

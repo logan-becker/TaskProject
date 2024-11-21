@@ -7,7 +7,6 @@ const TaskForm = ({ onTaskAdded }) => {
   const [pubDate, setPubDate] = useState('');
   const [isCompleted, setIsCompleted] = useState(false);
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     const taskData = {
@@ -19,113 +18,91 @@ const TaskForm = ({ onTaskAdded }) => {
 
     createTask(taskData)
       .then(() => {
-        // Clear form fields
         setTitle('');
         setDescription('');
         setPubDate('');
         setIsCompleted(false);
-        // Notify parent component to refresh the task list
         onTaskAdded();
       })
       .catch((error) => console.error('Error creating task:', error));
   };
 
   const styles = {
-    form: {
-      margin: '0 auto',
-      padding: '24px',
-      background: 'linear-gradient(to bottom, #ffffff, #f9fafb)',
+    formCard: {
+      maxWidth: '600px',
+      margin: '16px auto',
+      padding: '20px',
+      backgroundColor: '#ffffff',
       borderRadius: '8px',
-      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
       border: '1px solid #e5e7eb',
-      marginBottom: '20px'
     },
     title: {
       textAlign: 'center',
-      fontSize: '1.5rem',
+      fontSize: '1.25rem',
       fontWeight: '600',
-      marginBottom: '24px',
-      color: '#111827'
+      marginBottom: '16px',
+      color: '#111827',
     },
     formGroup: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'flex-start',
       marginBottom: '16px',
-      gap: '10px'
     },
     label: {
-      width: '120px',
-      textAlign: 'right',
-      fontSize: '0.95rem',
+      display: 'block',
+      marginBottom: '8px',
+      fontSize: '1rem',
+      fontWeight: '500',
       color: '#374151',
-      fontWeight: '500'
-    },
-    inputWrapper: {
-      flex: 1,
-      width: '220px'
     },
     input: {
-      width: '25%',
-      padding: '8px 12px',
-      border: '1px solid #e5e7eb',
+      width: '100%',
+      padding: '10px',
+      fontSize: '1rem',
       borderRadius: '6px',
-      fontSize: '0.95rem',
-      transition: 'border-color 0.2s ease',
+      border: '1px solid #e5e7eb',
       outline: 'none',
-      ':focus': {
-        borderColor: '#60a5fa',
-        boxShadow: '0 0 0 2px rgba(96, 165, 250, 0.1)'
-      }
+      boxSizing: 'border-box',
     },
     textarea: {
-      width: '50%',
-      padding: '8px 12px',
-      border: '1px solid #e5e7eb',
+      width: '100%',
+      padding: '10px',
+      fontSize: '1rem',
       borderRadius: '6px',
-      fontSize: '0.95rem',
-      minHeight: '100px',
-      resize: 'vertical',
-      transition: 'border-color 0.2s ease',
+      border: '1px solid #e5e7eb',
       outline: 'none',
-      ':focus': {
-        borderColor: '#60a5fa',
-        boxShadow: '0 0 0 2px rgba(96, 165, 250, 0.1)'
-      }
+      boxSizing: 'border-box',
+      resize: 'vertical',
     },
-    checkbox: {
-      width: '16px',
-      height: '16px',
-      cursor: 'pointer'
-    },
-    buttonContainer: {
+    checkboxContainer: {
       display: 'flex',
-      justifyContent: 'center',
-      marginTop: '24px'
+      alignItems: 'center',
+      gap: '10px',
     },
     button: {
-      backgroundColor: '#60a5fa',
-      color: 'white',
-      padding: '10px 24px',
-      borderRadius: '6px',
+      display: 'block',
+      width: '100%',
+      padding: '12px',
+      fontSize: '1rem',
+      fontWeight: '600',
+      color: '#ffffff',
+      backgroundImage: 'linear-gradient(to right, #4facfe, #00f2fe)',
       border: 'none',
-      fontSize: '0.95rem',
-      fontWeight: '500',
+      borderRadius: '6px',
       cursor: 'pointer',
-      transition: 'background-color 0.2s ease',
-      ':hover': {
-        backgroundColor: '#3b82f6'
-      }
-    }
+      transition: 'background-color 0.6s ease',
+    },
+    buttonHover: {
+      backgroundColor: '#2563eb',
+    },
   };
-  
+
   return (
-    <form onSubmit={handleSubmit} style={styles.form}>
-      <h2 style={styles.title}>Create New Task</h2>
-      
-      <div style={styles.formGroup}>
-        <label style={styles.label}>Title:</label>
-        <div style={styles.inputWrapper}>
+    <div style={styles.formCard}>
+      <form onSubmit={handleSubmit}>
+        {/* <h2 style={styles.title}>Create New Task</h2> */}
+
+        <div style={styles.formGroup}>
+          <label style={styles.label}>Title</label>
           <input
             type="text"
             value={title}
@@ -134,11 +111,9 @@ const TaskForm = ({ onTaskAdded }) => {
             style={styles.input}
           />
         </div>
-      </div>
 
-      <div style={styles.formGroup}>
-        <label style={styles.label}>Description:</label>
-        <div style={styles.inputWrapper}>
+        <div style={styles.formGroup}>
+          <label style={styles.label}>Description</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -146,11 +121,9 @@ const TaskForm = ({ onTaskAdded }) => {
             style={styles.textarea}
           ></textarea>
         </div>
-      </div>
 
-      <div style={styles.formGroup}>
-        <label style={styles.label}>Publish Date:</label>
-        <div style={styles.inputWrapper}>
+        <div style={styles.formGroup}>
+          <label style={styles.label}>Publish Date</label>
           <input
             type="date"
             value={pubDate}
@@ -159,26 +132,32 @@ const TaskForm = ({ onTaskAdded }) => {
             style={styles.input}
           />
         </div>
-      </div>
 
-      <div style={styles.formGroup}>
-        <label style={styles.label}>Is Completed:</label>
-        <div style={styles.inputWrapper}>
-          <input
-            type="checkbox"
-            checked={isCompleted}
-            onChange={(e) => setIsCompleted(e.target.checked)}
-            style={styles.checkbox}
-          />
+        <div style={styles.formGroup}>
+          <div style={styles.checkboxContainer}>
+            <input
+              type="checkbox"
+              checked={isCompleted}
+              onChange={(e) => setIsCompleted(e.target.checked)}
+            />
+            <label style={styles.label}>Task Complete?</label>
+          </div>
         </div>
-      </div>
 
-      <div style={styles.buttonContainer}>
-        <button type="submit" style={styles.button}>
-          Create Task
+        <button
+          type="submit"
+          style={styles.button}
+          onMouseEnter={(e) =>
+            (e.target.style.backgroundColor = styles.buttonHover.backgroundColor)
+          }
+          onMouseLeave={(e) =>
+            (e.target.style.backgroundColor = styles.button.backgroundColor)
+          }
+        >
+          Create New Task
         </button>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };
 
