@@ -1,37 +1,24 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import logout from '../slices/authSlice'
-
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../slices/authSlice';
 
 const Navbar = () => {
-
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-
-  // Access `isAuthenticated` from Redux state
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-
   const handleLogout = () => {
-    dispatch(logout()); 
+    // Dispatch the logout action
+    dispatch(logout());
+    // Clear localStorage
     localStorage.removeItem('accessToken');
-    localStorage.removeItem('email');
-
-    setEmail('');
-    setPassword('');
-
-    console.log('User Logged Out')
-
+    localStorage.removeItem('user');
+    console.log('User Logged Out');
+    // Navigate to login after logout logic completes
     navigate('/login');
   };
 
-  // Define style objects
   const styles = {
     navbar: {
       backgroundImage: 'linear-gradient(to right, #4facfe, #00f2fe)',
@@ -51,18 +38,12 @@ const Navbar = () => {
       textDecoration: 'none',
       color: 'white',
       fontWeight: '600',
-
-    },
-    navItemHover: {
-      textDecoration: 'underline',
     },
     brand: {
       fontWeight: '600',
       color: 'white',
     },
   };
-
-  console.log("Auth status: " + isAuthenticated)
 
   return (
     <nav style={styles.navbar}>
@@ -71,15 +52,24 @@ const Navbar = () => {
         {isAuthenticated ? (
           <>
             <li>
-              <Link to="/login" style={styles.navItem} onClick={handleLogout}>
+              {/* Replace Link with a button for logout */}
+              <button
+                onClick={handleLogout}
+                style={{
+                  ...styles.navItem,
+                  background: 'transparent',
+                  border: 'none',
+                  cursor: 'pointer',
+                }}
+              >
                 Logout
-              </Link>
+              </button>
             </li>
           </>
         ) : (
           <>
             <li>
-              <Link to="/login" style={styles.navItem} >
+              <Link to="/login" style={styles.navItem}>
                 Login
               </Link>
             </li>
